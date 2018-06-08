@@ -18,4 +18,4 @@ setup(name='xp_xscreensaver',
           ]
       },
       include_package_data=True,
-      zip_safe=False)
+)
