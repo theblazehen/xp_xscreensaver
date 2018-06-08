@@ -7,6 +7,9 @@ setup(name='xp_xscreensaver',
       author='Jeandre Le Roux',
       author_email='theblazehen@theblazehen.com',
       license='MIT',
+      install_requires=[
+          'pygame',
+      ],
       packages=['xp_xscreensaver'],
       package_data={'xp_xscreensaver': 'xp_xscreensaver/logon.png'},
       entry_points={
