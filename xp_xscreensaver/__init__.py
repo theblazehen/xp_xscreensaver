@@ -1,10 +1,11 @@
-#!/usr/bin/python2
+#!/usr/bin/python
 
 import os
 import pygame
 import random
 import time
 import sys, signal
+import pkg_resources
 
 def run_screensaver():
     def handle_term(signal, frame):
@@ -13,8 +14,9 @@ def run_screensaver():
 
     signal.signal(signal.SIGTERM, handle_term)
 
-    windowid = os.environ['XSCREENSAVER_WINDOW']
-    os.environ['SDL_WINDOWID'] = windowid
+    windowid = os.environ.get('XSCREENSAVER_WINDOW')
+    if windowid:
+        os.environ['SDL_WINDOWID'] = windowid
 
     pygame.init()
 
@@ -24,7 +26,7 @@ def run_screensaver():
 
     width, height = pygame.display.get_surface().get_size()
 
-    logolocation = os.path.dirname(os.path.realpath(__file__)) + "/logon.png"
+    logolocation = pkg_resources.resource_filename('xp_xscreensaver', 'logon.png')
     xplogo = pygame.image.load(logolocation)
     imagew = 275
     imageh = 174
