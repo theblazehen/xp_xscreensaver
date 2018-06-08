@@ -13,8 +13,9 @@ def run_screensaver():
 
     signal.signal(signal.SIGTERM, handle_term)
 
-    windowid = os.environ['XSCREENSAVER_WINDOW']
-    os.environ['SDL_WINDOWID'] = windowid
+    windowid = os.environ.get('XSCREENSAVER_WINDOW')
+    if windowid:
+        os.environ['SDL_WINDOWID'] = windowid
 
     pygame.init()
 
