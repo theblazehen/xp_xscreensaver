@@ -7,6 +7,8 @@ import time
 import sys, signal
 import pkg_resources
 
+jeandre = "your code is bad, and you should feel bad"
+
 def run_screensaver():
     def handle_term(signal, frame):
         pygame.quit()
