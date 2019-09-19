@@ -1,11 +1,18 @@
-#!/usr/bin/python
+#!/usr/bin/python2
 
 import os
 import pygame
 import random
 import time
 import sys, signal
-import pkg_resources
+import subprocess
+
+def get_win_size(window_id):
+    data = subprocess.check_output("xwininfo -id " + window_id + " | grep -e Width -e Height | tr -s ' ' | cut -d ' ' -f 3 | tail -n 2", shell=True).splitlines()
+    width = int(data[0])
+    height = int(data[1])
+    return (width, height)
+
 
 def run_screensaver():
     def handle_term(signal, frame):
@@ -14,9 +21,8 @@ def run_screensaver():
 
     signal.signal(signal.SIGTERM, handle_term)
 
-    windowid = os.environ.get('XSCREENSAVER_WINDOW')
-    if windowid:
-        os.environ['SDL_WINDOWID'] = windowid
+    windowid = os.environ['XSCREENSAVER_WINDOW']
+    os.environ['SDL_WINDOWID'] = windowid
 
     pygame.init()
 
@@ -24,9 +30,10 @@ def run_screensaver():
     window.fill((0,0,0))
     pygame.display.flip()
 
-    width, height = pygame.display.get_surface().get_size()
+    #width, height = pygame.display.get_surface().get_size()
+    width, height = get_win_size(windowid)
 
-    logolocation = pkg_resources.resource_filename('xp_xscreensaver', 'logon.png')
+    logolocation = os.path.dirname(os.path.realpath(__file__)) + "/logon.png"
     xplogo = pygame.image.load(logolocation)
     imagew = 275
     imageh = 174
@@ -43,5 +50,3 @@ def run_screensaver():
         pygame.display.flip()
 
         time.sleep(10)
-
-
